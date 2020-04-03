@@ -13,4 +13,4 @@ RUN pip install poetry==1.0.* && \
 COPY . ./
 
 CMD alembic upgrade head && \
-    gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.backend.main:app
+    gunicorn -w 2 -k uvicorn.workers.UvicornWorker app.backend.main:app
