@@ -43,12 +43,12 @@ class DevelopmentConfig(Config):
     # cmd = shlex.split("heroku config:get HEROKU_POSTGRESQL_PINK_URL -a ubsvsvirus")
     # p = subprocess.run(cmd, stdout=subprocess.PIPE)
     # DATABASE_URL = p.stdout.decode().strip().replace("postgres", "postgresql")
-    DATABASE_URL = os.environ["HEROKU_POSTGRESQL_PINK_URL"]
+    DATABASE_URL = os.environ["HEROKU_POSTGRESQL_PINK_URL"].replace("postgres", "postgresql")
 
 
 class ProductionConfig(Config):
     ENV: str = "production"
-    DATABASE_URL = os.environ["DATABASE_URL"]
+    DATABASE_URL = os.environ["DATABASE_URL"].replace("postgres", "postgresql")
 
 
 config_dict = {
