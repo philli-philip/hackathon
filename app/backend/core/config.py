@@ -1,4 +1,5 @@
 import logging
+import os
 import shlex
 import subprocess
 import sys
@@ -41,14 +42,12 @@ class DevelopmentConfig(Config):
     DEBUG: bool = True
     cmd = shlex.split("heroku config:get HEROKU_POSTGRESQL_PINK_URL -a ubsvsvirus")
     p = subprocess.run(cmd, stdout=subprocess.PIPE)
-    DATABASE_URL = p.stdout.decode().strip().replace("postgres","postgresql")
+    DATABASE_URL = p.stdout.decode().strip().replace("postgres", "postgresql")
 
 
 class ProductionConfig(Config):
     ENV: str = "production"
-    cmd = shlex.split("heroku config:get DATABASE_URL -a ubsvsvirus")
-    p = subprocess.run(cmd, stdout=subprocess.PIPE)
-    DATABASE_URL = p.stdout.decode().strip().replace("postgres","postgresql") 
+    DATABASE_URL = os.environ["DATABASE_URL"]
 
 
 config_dict = {

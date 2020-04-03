@@ -10,8 +10,6 @@ router = APIRouter()
 
 
 @router.get("", response_model=Sequence[UserWithID], name="users:get-current-user")
-async def retrieve_all_user(
-    ops: UserOps = Depends(),
-) -> Sequence[Mapping]:
+async def retrieve_all_user(ops: UserOps = Depends(),) -> Sequence[Mapping]:
     items = await ops.select_all()
     return items

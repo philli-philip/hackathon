@@ -10,6 +10,6 @@ convention = {
 
 metadata = MetaData(naming_convention=convention)
 
-from .user import UserOps, user # isort:skip
+from .user import UserOps, user  # isort:skip
 
 __all__ = ["metadata", "UserOps", "user"]
