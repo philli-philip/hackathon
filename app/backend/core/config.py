@@ -58,7 +58,7 @@ config_dict = {
 
 def get_config(config_name: str = None) -> Config:
     if config_name is None:
-        config_name: str = config("APP_CONFIG", default="development")
+        config_name: str = os.getenv("APP_CONFIG", "development")
     return config_dict[config_name]
 
 
