@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "Hackathon"
+version = "0.0.0"
+description = "Hackathon"
+authors = ["Musa Parmaksiz <musa.parmaksiz@gmail.com>"]
+license = "MIT"
+
+
+[tool.poetry.dependencies]
+python = "^3.8"
+aiofiles = "^0.4.0"
+alembic = "^1.4"
+asyncpg = "^0.20.1"
+databases = { version = "^0.2.6", extras = ["postgresql"] }
+fastapi = "^0.53.2"
+gunicorn = "^20.0.4"
+loguru = "^0.4.1"
+passlib = { version = "^1.7", extras = ["bcrypt"] }
+pydantic = { version = "^1.4", extras = ["email"] }
+pyjwt = "^1.7"
+uvicorn = "^0.11.3"
+
+
+[tool.poetry.dev-dependencies]
+black = "^19.10b0"
+flake8 = "^3.7.9"
+isort = "^4.3"
+
+[tool.black]
+line-length = 100
+
+[tool.isort]
+multi_line_output = 3
+include_trailing_comma = true
+line_length = 100
+combine_as_imports = true
+
+[build-system]
+requires = ["poetry>=1.0"]
+build-backend = "poetry.masonry.api"
