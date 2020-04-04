@@ -19,7 +19,7 @@
     <l-map
       :zoom="zoom"
       :center="center"
-      style="height: 600px; width: 600px"
+      style="height: 700px; width: 100%"
     >
       <l-tile-layer
         :url="url"
@@ -27,21 +27,25 @@
       />
       <l-geo-json
         v-if="show"
-        :geojson="geojson"
+        :geojson="geojson_hosp"
         :options="options"
-        :options-style="styleFunction"
       />
-      <l-marker :lat-lng="marker" />
+      <l-geo-json
+        v-if="show"
+        :geojson="geojson_border"
+        :options-style="{ color: 'grey', weight: 2, fillOpacity: 0.6, opacity:0 }"
+      />
+      <l-geo-json
+        v-if="show"
+        :geojson="geojson_canton"
+        :options-style="{ color: '#FF0000', weight: 1, fillOpacity: 0, opacity:1 }"
+      />
     </l-map>
   </div>
 </template>
 
 <script>
-import { latLng } from "leaflet";
-
-import {
-  LMap, LTileLayer, LMarker, LGeoJson,
-} from "vue2-leaflet";
+import { LMap, LTileLayer, LGeoJson } from "vue2-leaflet";
 
 export default {
   name: "Example",
@@ -49,20 +53,21 @@ export default {
     LMap,
     LTileLayer,
     LGeoJson,
-    LMarker,
   },
   data() {
     return {
       loading: false,
       show: true,
       enableTooltip: true,
-      zoom: 7,
+      zoom: 8,
       center: [46.8182, 8.2275],
-      geojson: null,
+      geojson_hosp: null,
+      geojson_border: null,
+      geojson_canton: null,
+      fillColor: "#e4ce7f",
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
       attribution:
         "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
-      marker: latLng(47.3769, 8.54172),
     };
   },
   computed: {
@@ -70,16 +75,6 @@ export default {
       return {
         onEachFeature: this.onEachFeatureFunction,
       };
-    },
-    styleFunction() {
-      const { fillColor } = this;
-      return () => ({
-        weight: 2,
-        color: "#ECEFF1",
-        opacity: 1,
-        fillColor,
-        fillOpacity: 1,
-      });
     },
     onEachFeatureFunction() {
       if (!this.enableTooltip) {
@@ -95,11 +90,35 @@ export default {
   },
   async created() {
     this.loading = true;
-    const response = await fetch(
+    let response = await fetch(
       "https://raw.githubusercontent.com/uversusvirus/swiss-hospital-data/master/data/openstreetmap_exports/Swiss_Healthcare_Facilities_OSM-2020-03-22.geojson",
     );
-    const data = await response.json();
-    this.geojson = data;
+    let data = await response.json();
+    this.geojson_hosp = data;
+
+    response = await fetch(
+      "https://raw.githubusercontent.com/ZHB/switzerland-geojson/master/country/switzerland.geojson",
+    );
+    data = await response.json();
+
+    data.features[0].geometry.coordinates[0].unshift(
+      [0, 90],
+      [180, 90],
+      [180, -90],
+      [0, -90],
+      [-180, -90],
+      [-180, 0],
+      [-180, 90],
+      [0, 90],
+    );
+    this.geojson_border = data;
+
+    response = await fetch(
+      "https://raw.githubusercontent.com/rsandstroem/IPythonNotebooks/master/GeoMapsFoliumDemo/switzerland.geojson",
+    );
+    data = await response.json();
+    this.geojson_canton = data;
+
     this.loading = false;
   },
 };
