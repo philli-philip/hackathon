@@ -2,6 +2,7 @@
   <div>
     <nav-bar />
     <v-content>
+      <informationPanel />
       <map-component />
     </v-content>
   </div>
@@ -10,6 +11,7 @@
 <script>
 import NavBar from "@/components/NavBar.vue";
 import MapComponent from "@/components/MapComponent.vue";
+import informationPanel from "@/components/informationPanel.vue";
 
 
 export default {
@@ -17,6 +19,7 @@ export default {
   components: {
     NavBar,
     MapComponent,
+    informationPanel,
 
   },
   data: () => ({
