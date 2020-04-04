@@ -1,43 +1,15 @@
 <template>
-  <div>
-    <v-app-bar
-      src="https://picsum.photos/1920/1080?random"
-      shrink-on-scroll
-      prominent
-      dark
-    >
-      <v-app-bar-nav-icon @click="drawer = true" />
-
-      <v-toolbar-title>UBS vs VIRUS</v-toolbar-title>
-    </v-app-bar>
-
-    <v-navigation-drawer
-      v-model="drawer"
-      absolute
-      temporary
-    >
-      <v-list
-        nav
-        dense
-      >
-        <v-list-item-group active-class="deep-purple--text text--accent-4">
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon>mdi-home</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Account</v-list-item-title>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
-  </div>
+  <v-app-bar
+    color="grey lighten-5"
+    shrink-on-scroll
+    prominent
+  >
+    <h2 class="blue--text text--darken-3">
+      ICU-CH
+    </h2>
+    <v-spacer />
+    <v-app-bar-nav-icon />
+  </v-app-bar>
 </template>
 
 

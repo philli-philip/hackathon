@@ -1,4 +1,4 @@
-FROM python:3.8.2
+FROM nikolaik/python-nodejs:python3.8-nodejs13
 
 ENV PYTHONUNBUFFERED 1
 

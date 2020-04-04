@@ -15,8 +15,9 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Niramit');
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: "Niramit", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
