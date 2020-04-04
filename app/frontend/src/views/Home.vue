@@ -3,6 +3,7 @@
     <nav-bar />
     <v-content>
       <hello-world />
+      <informationPanel />
       <map-component />
     </v-content>
   </div>
@@ -12,6 +13,7 @@
 import HelloWorld from "@/components/HelloWorld.vue";
 import NavBar from "@/components/NavBar.vue";
 import MapComponent from "@/components/MapComponent.vue";
+import informationPanel from "@/components/informationPanel.vue";
 
 
 export default {
@@ -20,6 +22,7 @@ export default {
     HelloWorld,
     NavBar,
     MapComponent,
+    informationPanel,
 
   },
   data: () => ({
