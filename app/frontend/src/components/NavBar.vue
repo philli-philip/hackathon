@@ -1,7 +1,5 @@
 <template>
   <v-app-bar
-    color="grey lighten-5"
-    shrink-on-scroll
     prominent
   >
     <h2 class="blue--text text--darken-3">

@@ -1,35 +1,50 @@
 <template>
   <div>
     <span v-if="loading">Loading...</span>
-    <l-map
-      :zoom="zoom"
-      :center="center"
-      style="height: 750px; width: 100%"
+    <v-img
+      height="700px"
+      width="100%"
     >
-      <l-tile-layer
-        :url="url"
-        :attribution="attribution"
-      />
-      <l-geo-json
-        :geojson="geojson_border"
-        :options-style="{ color: 'grey', weight: 2, fillOpacity: 0.7, opacity:0 }"
-      />
-      <l-geo-json
-        :geojson="geojson_canton"
-        :options-style="{ color: '#FF0000', weight: 1, fillOpacity: 0, opacity:1 }"
-      />
-      <l-geo-json
-        ref="hosp"
-        :geojson="geojson_hosp"
-        :options="options"
-      />
-    </l-map>
+      <l-map
+        :zoom.sync="zoom"
+        :center.sync="center"
+      >
+        <l-control>
+          <v-btn
+            small
+            class="font-weight-bold blue--text text--darken-2"
+            @click.native="reset"
+          >
+            reset
+          </v-btn>
+        </l-control>
+        <l-tile-layer
+          :url="url"
+          :attribution="attribution"
+        />
+        <l-geo-json
+          :geojson="geojson_border"
+          :options-style="{ color: 'grey', weight: 2, fillOpacity: 0.7, opacity:0 }"
+        />
+        <l-geo-json
+          :geojson="geojson_canton"
+          :options-style="{ color: '#FF0000', weight: 1, fillOpacity: 0, opacity:1 }"
+        />
+        <l-geo-json
+          ref="hosp"
+          :geojson="geojson_hosp"
+          :options="options"
+        />
+      </l-map>
+    </v-img>
   </div>
 </template>
 
 <script>
 import L from "leaflet";
-import { LMap, LTileLayer, LGeoJson } from "vue2-leaflet";
+import {
+  LMap, LTileLayer, LGeoJson, LControl,
+} from "vue2-leaflet";
 
 export default {
   name: "Example",
@@ -37,6 +52,7 @@ export default {
     LMap,
     LTileLayer,
     LGeoJson,
+    LControl,
   },
   data() {
     return {
@@ -47,20 +63,21 @@ export default {
       geojson_border: null,
       geojson_canton: null,
       url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      attribution: "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
+      attribution:
+        "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
 
       options: {
-        pointToLayer: function on(feature, latlng) {
-          return new L.CircleMarker(latlng, {
-            radius: 5,
-            weight: 2,
-            fillOpacity: 0.5,
-            opacity: 0.5,
-            color: "#1565C0",
+        pointToLayer: (feature, latlng) => new L.CircleMarker(latlng, {
+          radius: 5,
+          weight: 2,
+          fillOpacity: 0.5,
+          opacity: 0.5,
+          color: "#1565C0",
+        }),
+        onEachFeature: (feature, layer) => {
+          layer.on("click", () => {
+            this.$store.commit("set", { properties: feature.properties });
           });
-        },
-        onEachFeature: function onEachFeature(feature, layer) {
-          layer.bindPopup(feature.properties.name);
         },
       },
     };
@@ -105,6 +122,11 @@ export default {
 
     this.loading = false;
   },
-
+  methods: {
+    reset() {
+      this.zoom = 8;
+      this.center = [46.8182, 8.2275];
+    },
+  },
 };
 </script>
